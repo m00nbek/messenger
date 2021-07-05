@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Firebase
 
 class RegisterViewController: UIViewController {
     
@@ -123,7 +124,14 @@ class RegisterViewController: UIViewController {
                   alertUserLoginError()
                   return
               }
-        // Firebase log in
+        // Firebase Register
+        Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
+            guard error == nil else {
+                print("Error creating account")
+                return
+            }
+            print("Created User!")
+        }
     }
     @objc private func didTapChangePic() {
         presentPhotoActionSheet()

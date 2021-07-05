@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Firebase
 
 class LoginViewController: UIViewController {
     
@@ -86,6 +87,13 @@ class LoginViewController: UIViewController {
                   return
               }
         // Firebase log in
+        Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
+            if error != nil {
+                print("Error logging in")
+                return
+            }
+            print("Successfully logged in!")
+        }
     }
     private func alertUserLoginError() {
         let alert = UIAlertController(title: "Whoops!", message: "Please enger all the information to log in!", preferredStyle: .alert)
