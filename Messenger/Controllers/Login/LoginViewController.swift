@@ -7,6 +7,7 @@
 
 import UIKit
 import Firebase
+import FBSDKLoginKit
 
 class LoginViewController: UIViewController {
     
@@ -71,6 +72,7 @@ class LoginViewController: UIViewController {
         button.addTarget(self, action: #selector(loginButtonTapped), for: .touchUpInside)
         return button
     }()
+    private let fbLoginButton = FBLoginButton()
     // MARK: - Selectors
     @objc private func didTapRegister() {
         let vc = RegisterViewController()
@@ -116,6 +118,7 @@ class LoginViewController: UIViewController {
         scrollView.addSubview(emailTextField)
         scrollView.addSubview(passwordTextField)
         scrollView.addSubview(loginButton)
+        scrollView.addSubview(fbLoginButton)
         
     }
     private func layoutSubviews() {
@@ -126,6 +129,7 @@ class LoginViewController: UIViewController {
         emailTextField.frame = CGRect(x: 30, y: imageView.bottom + 10, width: scrollView.width-60, height: 52)
         passwordTextField.frame = CGRect(x: 30, y: emailTextField.bottom + 10, width: scrollView.width-60, height: 52)
         loginButton.frame = CGRect(x: 30, y: passwordTextField.bottom + 10, width: scrollView.width-60, height: 52)
+        fbLoginButton.frame = CGRect(x: 30, y: loginButton.bottom + 10, width: scrollView.width-60, height: 52)
     }
     private func configureNav() {
         title = "Log In"
