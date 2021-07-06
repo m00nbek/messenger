@@ -124,20 +124,30 @@ class RegisterViewController: UIViewController {
                   alertUserLoginError()
                   return
               }
-        // Firebase Register
-        Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
-            guard error == nil else {
-                print("Error creating account")
+        // Check if user exists
+        DatabaseManager.shared.userExists(with: email) { [weak self] exists in
+            if exists {
+                // user already exists
+                self?.alertUserLoginError(message: "User already exists!")
                 return
             }
-            print("Created User!")
+            // Register User
+            Auth.auth().createUser(withEmail: email, password: password) { [weak self] authResult, error in
+                guard error == nil else {
+                    print("Error creating account")
+                    return
+                }
+                DatabaseManager.shared.insertUer(with: ChatAppUser(firstName: firstName, lastName: lastName, emailAddress: email))
+                self?.navigationController?.dismiss(animated: true, completion: nil)
+            }
+            
         }
     }
     @objc private func didTapChangePic() {
         presentPhotoActionSheet()
     }
-    private func alertUserLoginError() {
-        let alert = UIAlertController(title: "Whoops!", message: "Please enger all the information to create a new account!", preferredStyle: .alert)
+    private func alertUserLoginError(message: String = "Please enger all the information to create a new account!") {
+        let alert = UIAlertController(title: "Whoops!", message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: nil))
         present(alert, animated: true)
     }
