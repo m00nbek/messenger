@@ -72,7 +72,11 @@ class LoginViewController: UIViewController {
         button.addTarget(self, action: #selector(loginButtonTapped), for: .touchUpInside)
         return button
     }()
-    private let fbLoginButton = FBLoginButton()
+    private let fbLoginButton: FBLoginButton = {
+        let button = FBLoginButton()
+        button.permissions = ["email,public_profile"]
+        return button
+    }()
     // MARK: - Selectors
     @objc private func didTapRegister() {
         let vc = RegisterViewController()
@@ -112,6 +116,7 @@ class LoginViewController: UIViewController {
         // delegates
         emailTextField.delegate = self
         passwordTextField.delegate = self
+        fbLoginButton.delegate = self
         // addSubviews
         view.addSubview(scrollView)
         scrollView.addSubview(imageView)
@@ -150,3 +155,25 @@ extension LoginViewController: UITextFieldDelegate {
     }
 }
 
+// MARK: - LoginButtonDelegate
+extension LoginViewController: LoginButtonDelegate {
+    func loginButtonDidLogOut(_ loginButton: FBLoginButton) {
+        
+    }
+    func loginButton(_ loginButton: FBLoginButton, didCompleteWith result: LoginManagerLoginResult?, error: Error?) {
+        guard let token = result?.token?.tokenString else {
+            print("User failed to log in with Facebook")
+            return
+        }
+        let credential = FacebookAuthProvider.credential(withAccessToken: token)
+        Auth.auth().signIn(with: credential) { [weak self] authResult, error in
+            if error != nil {
+                print("Facebook credential login failed, MFA maybe needed")
+                return
+            }
+            print("Successfully logged in")
+            self?.navigationController?.dismiss(animated: true, completion: nil)
+        }
+    }
+
+}
