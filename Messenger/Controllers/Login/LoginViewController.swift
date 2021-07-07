@@ -8,6 +8,7 @@
 import UIKit
 import Firebase
 import FBSDKLoginKit
+import GoogleSignIn
 
 class LoginViewController: UIViewController {
     
@@ -19,6 +20,11 @@ class LoginViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         layoutSubviews()
+    }
+    deinit {
+        if let observer = loginObserver {
+            NotificationCenter.default.removeObserver(observer)
+        }
     }
     // MARK: - Properties
     private let imageView: UIImageView = {
@@ -77,6 +83,8 @@ class LoginViewController: UIViewController {
         button.permissions = ["public_profile", "email"]
         return button
     }()
+    private let googleLoginButton = GIDSignInButton()
+    private var loginObserver: NSObjectProtocol?
     // MARK: - Selectors
     @objc private func didTapRegister() {
         let vc = RegisterViewController()
@@ -110,8 +118,15 @@ class LoginViewController: UIViewController {
     // MARK: - API
     // MARK: - Functions
     private func configureUI() {
+        loginObserver = NotificationCenter.default.addObserver(forName: .didLogInNotification,
+                                                               object: nil, queue: .main, using: { [weak self] _ in
+            self?.navigationController?.dismiss(animated: true, completion: nil)
+        })
         view.backgroundColor = .white
         configureNav()
+        
+        // Google sign in
+        GIDSignIn.sharedInstance().presentingViewController = self
         
         // delegates
         emailTextField.delegate = self
@@ -124,7 +139,7 @@ class LoginViewController: UIViewController {
         scrollView.addSubview(passwordTextField)
         scrollView.addSubview(loginButton)
         scrollView.addSubview(fbLoginButton)
-        
+        scrollView.addSubview(googleLoginButton)
     }
     private func layoutSubviews() {
         scrollView.frame = view.bounds
@@ -135,6 +150,7 @@ class LoginViewController: UIViewController {
         passwordTextField.frame = CGRect(x: 30, y: emailTextField.bottom + 10, width: scrollView.width-60, height: 52)
         loginButton.frame = CGRect(x: 30, y: passwordTextField.bottom + 10, width: scrollView.width-60, height: 52)
         fbLoginButton.frame = CGRect(x: 30, y: loginButton.bottom + 10, width: scrollView.width-60, height: 52)
+        googleLoginButton.frame = CGRect(x: 30, y: fbLoginButton.bottom + 10, width: scrollView.width-60, height: 52)
     }
     private func configureNav() {
         title = "Log In"
