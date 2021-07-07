@@ -19,6 +19,11 @@ class ConversationsViewController: UIViewController {
     }
     
     // MARK: - Properties
+    private let tableView: UITableView = {
+        let tableView = UITableView()
+        
+        return tableView
+    }()
     // MARK: - Selectors
     // MARK: - API
     // MARK: - Functions
