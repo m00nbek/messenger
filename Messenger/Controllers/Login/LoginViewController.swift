@@ -9,6 +9,7 @@ import UIKit
 import Firebase
 import FBSDKLoginKit
 import GoogleSignIn
+import JGProgressHUD
 
 class LoginViewController: UIViewController {
     
@@ -27,6 +28,7 @@ class LoginViewController: UIViewController {
         }
     }
     // MARK: - Properties
+    private let spinner = JGProgressHUD(style: .dark)
     private let imageView: UIImageView = {
         let iv = UIImageView()
         iv.image = UIImage(named: "logo")
@@ -100,11 +102,15 @@ class LoginViewController: UIViewController {
                   alertUserLoginError()
                   return
               }
+        spinner.show(in: view)
         // Firebase log in
         Auth.auth().signIn(withEmail: email, password: password) { [weak self] authResult, error in
             if error != nil {
                 print("Error logging in")
                 return
+            }
+            DispatchQueue.main.async {
+                self?.spinner.dismiss()
             }
             print("Successfully logged in!")
             self?.navigationController?.dismiss(animated: true, completion: nil)

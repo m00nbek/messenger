@@ -23,6 +23,7 @@
 		AB64F2DD2691D8B3005565AE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AB64F2DC2691D8B3005565AE /* Assets.xcassets */; };
 		AB64F2E02691D8B3005565AE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AB64F2DE2691D8B3005565AE /* LaunchScreen.storyboard */; };
 		ABB03BC7269365D100E19394 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = ABB03BC6269365D100E19394 /* GoogleService-Info.plist */; };
+		ABE396722695B87800C4261C /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE396712695B87800C4261C /* ChatViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +47,7 @@
 		AB64F2DF2691D8B3005565AE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		AB64F2E12691D8B3005565AE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		ABB03BC6269365D100E19394 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		ABE396712695B87800C4261C /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +79,7 @@
 				AB329A9C2691DD9C00F24F05 /* VideoPlayerViewController.swift */,
 				AB329A9E2691DDC500F24F05 /* NewConversationViewController.swift */,
 				AB329AA02691DDE100F24F05 /* ProfileViewController.swift */,
+				ABE396712695B87800C4261C /* ChatViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -317,6 +320,7 @@
 				AB64F2D42691D8B1005565AE /* AppDelegate.swift in Sources */,
 				AB329AA12691DDE100F24F05 /* ProfileViewController.swift in Sources */,
 				AB64F2D62691D8B1005565AE /* SceneDelegate.swift in Sources */,
+				ABE396722695B87800C4261C /* ChatViewController.swift in Sources */,
 				AB329A9B2691DD7B00F24F05 /* PhotoViewerViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

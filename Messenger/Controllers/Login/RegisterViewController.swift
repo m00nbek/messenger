@@ -7,6 +7,7 @@
 
 import UIKit
 import Firebase
+import JGProgressHUD
 
 class RegisterViewController: UIViewController {
     
@@ -20,6 +21,7 @@ class RegisterViewController: UIViewController {
         layoutSubviews()
     }
     // MARK: - Properties
+    private let spinner = JGProgressHUD(style: .dark)
     private let imageView: UIImageView = {
         let iv = UIImageView()
         iv.image = UIImage(systemName: "person.crop.circle")
@@ -124,6 +126,7 @@ class RegisterViewController: UIViewController {
                   alertUserLoginError()
                   return
               }
+        spinner.show(in: view)
         // Check if user exists
         DatabaseManager.shared.userExists(with: email) { [weak self] exists in
             if exists {
@@ -138,6 +141,9 @@ class RegisterViewController: UIViewController {
                     return
                 }
                 DatabaseManager.shared.insertUser(with: ChatAppUser(firstName: firstName, lastName: lastName, emailAddress: email))
+                DispatchQueue.main.async {
+                    self?.spinner.dismiss()
+                }
                 self?.navigationController?.dismiss(animated: true, completion: nil)
             }
             
