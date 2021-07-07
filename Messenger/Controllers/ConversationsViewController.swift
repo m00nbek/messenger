@@ -12,11 +12,14 @@ class ConversationsViewController: UIViewController {
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
+        let composeButton = UIBarButtonItem(barButtonSystemItem: .compose, target: self, action: #selector(didTapComposeButton))
+        navigationItem.setRightBarButton(composeButton, animated: true)
         super.viewDidLoad()
         view.addSubview(tableView)
         view.addSubview(noConversationsLabel)
         setupTableView()
         fetchConversations()
+        
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -44,6 +47,11 @@ class ConversationsViewController: UIViewController {
         return label
     }()
     // MARK: - Selectors
+    @objc func didTapComposeButton() {
+        let vc = NewConversationViewController()
+        let nav = UINavigationController(rootViewController: vc)
+        present(nav, animated: true)
+    }
     // MARK: - API
     // MARK: - Functions
     private func setupTableView() {
