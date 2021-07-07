@@ -22,7 +22,10 @@ class ConversationsViewController: UIViewController {
         super.viewDidAppear(animated)
         validateAuth()
     }
-    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        layoutSubviews()
+    }
     // MARK: - Properties
     private let spinner = JGProgressHUD(style: .dark)
     private let tableView: UITableView = {
@@ -47,6 +50,9 @@ class ConversationsViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
     }
+    private func layoutSubviews() {
+        tableView.frame = view.bounds
+    }
     private func validateAuth() {
         if Auth.auth().currentUser == nil {
             let vc = LoginViewController()
@@ -56,10 +62,8 @@ class ConversationsViewController: UIViewController {
         }
     }
     private func fetchConversations() {
-        
+        tableView.isHidden = false
     }
-    
-    
 }
 
 // MARK: - UITableViewDelegate/DataSource
@@ -70,6 +74,7 @@ extension ConversationsViewController: UITableViewDelegate, UITableViewDataSourc
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         cell.textLabel?.text = "Hello World!"
+        cell.accessoryType = .disclosureIndicator
         return cell
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
