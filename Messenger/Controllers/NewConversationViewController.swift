@@ -20,6 +20,7 @@ class NewConversationViewController: UIViewController {
                                                         style: .done,
                                                         target: self,
                                                         action: #selector(dismissSelf)), animated: true)
+        searchBar.becomeFirstResponder()
     }
     // MARK: - Properties
     private let spinner = JGProgressHUD(style: .dark)
