@@ -16,7 +16,7 @@ class NewConversationViewController: UIViewController {
         view.backgroundColor = .white
         searchBar.delegate = self
         navigationController?.navigationBar.topItem?.titleView = searchBar
-        navigationItem.setLeftBarButton(UIBarButtonItem(title: "Cancel",
+        navigationItem.setRightBarButton(UIBarButtonItem(title: "Cancel",
                                                         style: .done,
                                                         target: self,
                                                         action: #selector(dismissSelf)), animated: true)
