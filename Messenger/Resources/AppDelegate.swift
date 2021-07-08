@@ -49,6 +49,7 @@ options: [UIApplication.OpenURLOptionsKey : Any] = [:]
               let firstName = user.profile.givenName,
               let lastName = user.profile.familyName
         else {return}
+        UserDefaults.standard.set(email, forKey: "email")
         DatabaseManager.shared.userExists(with: email) { exists in
             if !exists {
                 let chatUser = ChatAppUser(firstName: firstName, lastName: lastName, emailAddress: email)

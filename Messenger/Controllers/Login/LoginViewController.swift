@@ -113,6 +113,7 @@ class LoginViewController: UIViewController {
                 self?.spinner.dismiss()
             }
             print("Successfully logged in!")
+            UserDefaults.standard.set(email, forKey: "email")
             self?.navigationController?.dismiss(animated: true, completion: nil)
         }
     }
@@ -205,6 +206,7 @@ extension LoginViewController: LoginButtonDelegate {
                 print("Failed to get user name and email")
                 return
             }
+            UserDefaults.standard.set(email, forKey: "email")
             DatabaseManager.shared.userExists(with: email) { exists in
                 if !exists {
                     let chatUser = ChatAppUser(firstName: firstName, lastName: lastName, emailAddress: email)
