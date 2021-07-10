@@ -49,11 +49,24 @@ class ConversationsViewController: UIViewController {
     // MARK: - Selectors
     @objc func didTapComposeButton() {
         let vc = NewConversationViewController()
+        vc.completion = { [weak self] result in
+            self?.createNewConversation(result: result)
+        }
         let nav = UINavigationController(rootViewController: vc)
         present(nav, animated: true)
     }
     // MARK: - API
     // MARK: - Functions
+    private func createNewConversation(result: [String: String]) {
+        guard let name = result["name"], let email = result["email"] else {
+            return
+        }
+        let vc = ChatViewController(with: email)
+        vc.isNewConversation = true
+        vc.title = name
+        vc.navigationItem.largeTitleDisplayMode = .never
+        navigationController?.pushViewController(vc, animated: true)
+    }
     private func setupTableView() {
         tableView.delegate = self
         tableView.dataSource = self
@@ -88,7 +101,7 @@ extension ConversationsViewController: UITableViewDelegate, UITableViewDataSourc
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
-        let vc = ChatViewController()
+        let vc = ChatViewController(with: "adfada@gmail.com")
         vc.title = "John Doe"
         vc.navigationItem.largeTitleDisplayMode = .never
         navigationController?.pushViewController(vc, animated: true)
